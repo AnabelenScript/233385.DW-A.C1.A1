@@ -1,0 +1,26 @@
+#titulo1{
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Arial', sans-serif;
+    box-shadow: 0 4px 8px #0000001a;
+    background-color: #ececec;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+
+table {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+

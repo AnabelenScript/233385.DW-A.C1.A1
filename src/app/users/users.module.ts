@@ -5,8 +5,6 @@ import { EditUserFormComponent } from './edit-user-form/edit-user-form.component
 import { FormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
 
-
-
 @NgModule({
   declarations: [
     UsersDashboardComponent,
