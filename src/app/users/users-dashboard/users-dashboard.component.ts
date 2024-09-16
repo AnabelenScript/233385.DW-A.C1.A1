@@ -1,21 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { IUser } from '../interfaces/iuser';
-import { OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-users-dashboard',
   templateUrl: './users-dashboard.component.html',
-  styleUrl: './users-dashboard.component.css'
+  styleUrls: ['./users-dashboard.component.css']
 })
-export class UsersDashboardComponent implements OnInit{
+export class UsersDashboardComponent implements OnInit {
 
-  ngOnInit(): void {
-      this._service.getAll().subscribe(
-        response => this.users = response
-      )
-  }
-
+  users: IUser[] = []; 
   selectedUser: IUser = {
     id: 1,
     name: "Marco",
@@ -23,19 +17,32 @@ export class UsersDashboardComponent implements OnInit{
     email: "marco1@gmail.com",
     phone: "961 872 9982",
     website: "marco1.com"
+  };
+
+  displayedColumns: string[] = ['id', 'name', 'username', 'email', 'phone', 'website'];
+
+  constructor(private _service: UserService) {}
+
+  ngOnInit(): void {
+    this.loadUsers(); 
   }
-
-  displayedColumns: string[] = ['id', 'name', 'username', 'email', 'phone', 'website']
-
-  users: IUser[] = []
-
-  constructor(private _service: UserService){
-
+  loadUsers(): void {
+    this._service.getAll().subscribe(
+      (response: IUser[]) => this.users = response,
+      (error) => console.error('Error al obtener los usuarios', error)
+    );
   }
-
-  addUser(user: IUser): void{
-    this.users.push(user);
-    console.log(this.users);
+  addUser(user: IUser): void {
+    const newId = this.users.length > 0 ? Math.max(...this.users.map(u => u.id)) + 1 : 1;
+    const newUser: IUser = { ...user, id: newId };
+    this._service.add(newUser).subscribe(
+      (user: IUser) => {
+        this.users = [...this.users, newUser];
+        console.log('Usuario agregado:', newUser);
+      },
+    );
   }
-
+  onUserAdded(user: IUser): void {
+    this.addUser(user);
+  }
 }
